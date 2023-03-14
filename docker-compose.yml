@@ -1,0 +1,78 @@
+version: '3.5'
+
+services:
+    app:
+        build:
+            context: '.'
+            args:
+                uid: ${UID}
+        container_name: app
+        environment:
+            - APACHE_RUN_USER=#${UID}
+            - APACHE_RUN_GROUP=#${UID}
+
+        volumes:
+            - .:/var/www/html
+        links:
+            - mysql-mdb
+        ports:
+            - 80:80
+        networks:
+            backend:
+                aliases:
+                    - app
+
+    mysql-mdb:
+        image: mariadb:10.5.8
+        container_name: mysql-mdb
+        ports:
+            - "6033:3306"
+        volumes:
+            - ../docker/run/var:/var/lib/mysql
+            - ../docker/run/ifnation-dev.sql:/docker-entrypoint-initdb.d/init.sql
+        environment:
+            - MYSQL_ROOT_PASSWORD=SlAD&@JCKAS@@^da
+            - MYSQL_DATABASE=${DB_DATABASE}
+            - MYSQL_USER=${DB_USERNAME}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+        networks:
+            backend:
+                aliases:
+                    - mysql-mdb
+    cache-redis:
+        image: redis:6.2-alpine
+        container_name: redis
+        ports:
+            - '6379:6379'
+        command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+        volumes:
+            - cache-redis:/data
+        networks:
+            backend:
+                aliases:
+                    - cache-redis
+
+
+    phpmyadmin-db:
+        container_name: phpmyadmin-db
+        image: phpmyadmin/phpmyadmin:latest
+        restart: always
+        links:
+            - mysql-mdb
+        environment:
+            PMA_HOST: mysql-mdb
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
+        ports:
+            - 8081:80
+        networks:
+            backend:
+                aliases:
+                    - phpmyadmin-db
+
+networks:
+    backend:
+        name: network
+volumes:
+    cache-redis:
+        driver: local
