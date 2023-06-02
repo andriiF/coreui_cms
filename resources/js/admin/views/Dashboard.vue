@@ -1,6 +1,8 @@
 <template>
   <div>
     <WidgetsStatsA />
+
+      {{$store.getters.user}}
     <CRow>
       <CCol :md="12">
         <CCard class="mb-4">

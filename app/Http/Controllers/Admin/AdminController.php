@@ -12,4 +12,10 @@ class AdminController extends Controller
     {
         return view('admin');
     }
+
+    public function getUser()
+    {
+
+        return Auth::user();
+    }
 }

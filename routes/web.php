@@ -14,3 +14,4 @@ Route::get('/login', function () {
 Route::post('/login', [\App\Http\Controllers\Auth\AuthController::class, 'store'])->name('login.store');
 
 
+
