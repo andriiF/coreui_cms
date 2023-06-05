@@ -9,6 +9,9 @@
     <!-- Fonts -->
 
     <!-- Styles -->
+
+    <!-- Scripts -->
+    @routes
 </head>
 <body class="antialiased">
 <div id="app">
@@ -17,6 +20,8 @@
         </app>
     </div>
 </div>
+
+
 @vite('resources/js/admin/main.js')
 </body>
 </html>
