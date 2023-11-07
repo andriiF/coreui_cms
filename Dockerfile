@@ -1,5 +1,7 @@
 FROM php:8.2-apache
 
+ARG NODE_VERSION=18
+
 RUN apt-get update
 
 RUN apt-get install -y \
@@ -20,7 +22,10 @@ RUN apt-get install -y \
     libfreetype6-dev \
     libonig-dev \
     imagemagick \
-    g++
+    g++ \
+    && curl -sLS https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \
+        && apt-get install -y nodejs \
+        && npm install -g npm \
 
 ENV APACHE_DOCUMENT_ROOT=/var/www/html
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf

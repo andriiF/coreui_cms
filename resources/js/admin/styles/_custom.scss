@@ -1,1 +1,7 @@
-// Here you can add other styles
+.error {
+    color: $red-500;
+}
+
+input.error, textarea.error {
+    border: 1px solid $red-500;
+}

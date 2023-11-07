@@ -12,11 +12,13 @@
                 <CForm class="row g-3">
                     <CCol :md="6">
                         <CFormLabel>Nazwa</CFormLabel>
-                        <CFormInput type="text" v-model="form.name"/>
+                        <CFormInput type="text" v-model="form.name" :class="{'error':errors.name}"/>
+                        <ErrorMessage :message="errors.name"/>
                     </CCol>
                     <CCol :md="6">
                         <CFormLabel>E-mail</CFormLabel>
-                        <CFormInput type="e-mail" v-model="form.email"/>
+                        <CFormInput type="e-mail" v-model="form.email" :class="{'error':errors.email}"/>
+                        <ErrorMessage :message="errors.email"/>
                     </CCol>
                     <CCol :xs="12" class="mt-5">
                         <CButton type="button" color="primary" @click="save">Zapisz</CButton>
@@ -31,10 +33,12 @@
 
 import {useStore} from "vuex";
 import axios from "axios";
+import {ref} from "vue";
+import ErrorMessage from "@/admin/components/tools/ErrorMessage";
 
 const store = useStore()
-
 const user = store.getters.user;
+const errors = ref({});
 
 const form = {...user};
 
@@ -42,6 +46,9 @@ const save = () => {
     axios.post(route('profile.update', {id: user.id}), form)
         .then(response => {
             console.log(response);
+        })
+        .catch(err => {
+            errors.value = err.response.data.errors;
         })
 }
 </script>
