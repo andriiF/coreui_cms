@@ -45,7 +45,7 @@ const form = {...user};
 const save = () => {
     axios.post(route('profile.update', {id: user.id}), form)
         .then(response => {
-            console.log(response);
+            errors.value = {};
         })
         .catch(err => {
             errors.value = err.response.data.errors;
