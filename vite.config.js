@@ -8,7 +8,10 @@ export default defineConfig({
     server:{
         hmr: {
             host:'localhost'
-        }
+        },
+        host:true,
+        strictPort:true,
+        port:5173
     },
     plugins: [
         vue(),

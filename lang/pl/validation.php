@@ -2,6 +2,9 @@
 
 return [
     'accepted' => 'Pole :attribute musi zostać zaakceptowane.',
+    'auth'=>[
+        'failed'=>'Nie poprawne dane logowania'
+    ],
     'accepted_if' => 'Pole :attribute musi zostać zaakceptowane gdy :other ma wartość :value.',
     'active_url' => 'Pole :attribute jest nieprawidłowym adresem URL.',
     'after' => 'Pole :attribute musi być datą późniejszą od :date.',
