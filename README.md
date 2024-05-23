@@ -30,3 +30,6 @@ Development
 Production
 
     npm run prod
+# Versions
+    node v22.2.0
+    php 8.2
