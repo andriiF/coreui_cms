@@ -29,14 +29,9 @@ class UserRepository implements UserRepositoryInterface
 
     public function update(int $id, $data): void
     {
-        DB::beginTransaction();
-        try {
+        DB::transaction(function () use ($id, $data) {
             $user = $this->find($id);
             $user->update($data);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
-        DB::commit();
+        });
     }
 }
