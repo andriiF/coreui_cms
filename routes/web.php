@@ -11,6 +11,7 @@ Route::get('/login', function () {
     return view('welcome');
 })->name('login');
 
+
 Route::post('/login', [\App\Http\Controllers\Auth\AuthController::class, 'store'])->name('login.store');
 
 

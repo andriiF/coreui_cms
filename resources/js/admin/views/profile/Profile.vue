@@ -35,20 +35,33 @@ import {useStore} from "vuex";
 import axios from "axios";
 import {ref} from "vue";
 import ErrorMessage from "@/admin/components/tools/ErrorMessage";
+import {useForm} from "@inertiajs/vue3";
 
 const store = useStore()
 const user = store.getters.user;
 const errors = ref({});
 
-const form = {...user};
+const form = useForm(store.getters.user);
 
 const save = () => {
-    axios.post(route('profile.update', {id: user.id}), form)
-        .then(response => {
-            errors.value = {};
-        })
-        .catch(err => {
-            errors.value = err.response.data.errors;
-        })
+
+    form.post(route('profile.update', {id: user.id}), {
+        preserveState: false,
+        onSuccess: () => {
+            console.log('test');
+        },
+        onError: () => {
+            console.log(form.errors);
+        }
+    })
+
+
+    // axios.post(route('profile.update', {id: user.id}), form)
+    //     .then(response => {
+    //         errors.value = {};
+    //     })
+    //     .catch(err => {
+    //         errors.value = err.response.data.errors;
+    //     })
 }
 </script>

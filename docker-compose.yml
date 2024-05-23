@@ -3,10 +3,15 @@ version: '3.5'
 services:
     app:
         build:
-            context: '.'
+            context: './docker/8.2'
             args:
                 uid: ${UID}
         container_name: app
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - '80:80'
+            - '5173:5173'
         environment:
             - APACHE_RUN_USER=#${UID}
             - APACHE_RUN_GROUP=#${UID}
@@ -15,8 +20,6 @@ services:
             - .:/var/www/html
         links:
             - mysql-mdb
-        ports:
-            - 80:80
         networks:
             backend:
                 aliases:
@@ -28,10 +31,10 @@ services:
         ports:
             - "6033:3306"
         volumes:
-            - ../docker/run/var:/var/lib/mysql
-            - ../docker/run/ifnation-dev.sql:/docker-entrypoint-initdb.d/init.sql
+            - ../docker-db/run/var:/var/lib/mysql
+            - ../docker-db/run/afedorenko-dev.sql:/docker-entrypoint-initdb.d/init.sql
         environment:
-            - MYSQL_ROOT_PASSWORD=SlAD&@JCKAS@@^da
+            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
             - MYSQL_DATABASE=${DB_DATABASE}
             - MYSQL_USER=${DB_USERNAME}
             - MYSQL_PASSWORD=${DB_PASSWORD}
