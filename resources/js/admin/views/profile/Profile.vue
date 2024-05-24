@@ -35,7 +35,8 @@ import {useStore} from "vuex";
 import axios from "axios";
 import {ref} from "vue";
 import ErrorMessage from "@/admin/components/tools/ErrorMessage";
-import {easyForm} from "@/admin/libraries/form/Form";
+import {easyForm} from "../../libraries/form/Form";
+// import easyForm  from "@/admin/libraries"
 
 const store = useStore()
 const user = store.getters.user;

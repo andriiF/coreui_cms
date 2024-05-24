@@ -52,6 +52,11 @@ export type SimpleForm<TForm extends FormDataType> = TForm & SimpleFormProps<TFo
 
 export function easyForm<TForm extends FormDataType>(data: TForm | (() => TForm)): SimpleForm<TForm>;
 
+export default function easyForm<TForm extends FormDataType>(
+    rememberKey: string,
+    data: TForm | (() => TForm),
+): SimpleForm<TForm>
+
 export function easyForm<TForm extends FormDataType>(
     rememberKeyOrData: string | TForm | (() => TForm),
     maybeData?: TForm | (() => TForm),
@@ -183,10 +188,12 @@ export function easyForm<TForm extends FormDataType>(
                 },
             }
 
+            const r = new router();
+
             if (method === 'delete') {
-                router.delete(url, {..._options, data})
+                // r.delete(url, {..._options, data})
             } else {
-                router[method](url, data, _options)
+                r[method](url, data, _options)
             }
         },
         get(url, options) {
@@ -229,6 +236,5 @@ export function easyForm<TForm extends FormDataType>(
         },
         {immediate: true, deep: true},
     )
-
     return form
 }
