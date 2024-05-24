@@ -1,5 +1,5 @@
 import {Progress, FormDataConvertible, Method} from './Core';
-import router from './router/router';
+import Router from './router/router';
 import {reactive, watch} from "vue";
 import cloneDeep from 'lodash.clonedeep'
 import isEqual from 'lodash.isequal'
@@ -64,7 +64,7 @@ export function easyForm<TForm extends FormDataType>(
     const rememberKey = typeof rememberKeyOrData === 'string' ? rememberKeyOrData : null
     const data = typeof rememberKeyOrData === 'string' ? maybeData : rememberKeyOrData
     const restored = rememberKey
-        ? (router.restore(rememberKey) as { data: TForm; errors: Record<keyof TForm, string> })
+        ? (Router.restore(rememberKey) as { data: TForm; errors: Record<keyof TForm, string> })
         : null
     let defaults = typeof data === 'object' ? cloneDeep(data) : cloneDeep(data())
     let cancelToken = null
@@ -145,7 +145,7 @@ export function easyForm<TForm extends FormDataType>(
 
             return this
         },
-        submit(method, url) {
+        submit(method, url, options:any = {}) {
             const data = transform(this.data())
             const _options = {
                 onCancelToken: (token) => {
@@ -162,7 +162,7 @@ export function easyForm<TForm extends FormDataType>(
                 onProgress: (event) => {
                     this.progress = event
                 },
-                onSuccess: async (page) => {
+                onSuccess: async (response) => {
                     this.processing = false
                     this.progress = null
                     this.clearErrors()
@@ -171,6 +171,7 @@ export function easyForm<TForm extends FormDataType>(
                     recentlySuccessfulTimeoutId = setTimeout(() => (this.recentlySuccessful = false), 2000)
                     defaults = cloneDeep(this.data())
                     this.isDirty = false
+                    options.onSuccess(response);
                 },
                 onError: (errors) => {
                     this.processing = false
@@ -188,7 +189,7 @@ export function easyForm<TForm extends FormDataType>(
                 },
             }
 
-            const r = new router();
+            const r = new Router();
 
             if (method === 'delete') {
                 // r.delete(url, {..._options, data})
@@ -231,7 +232,7 @@ export function easyForm<TForm extends FormDataType>(
         (newValue) => {
             form.isDirty = !isEqual(form.data(), defaults)
             if (rememberKey) {
-                router.remember(cloneDeep(newValue.__remember()), rememberKey)
+                Router.remember(cloneDeep(newValue.__remember()), rememberKey)
             }
         },
         {immediate: true, deep: true},

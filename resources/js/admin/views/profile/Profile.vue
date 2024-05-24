@@ -51,8 +51,8 @@ const save = () => {
 
     form.post(route('profile.update', {id: user.id}), {
         preserveState: false,
-        onSuccess: () => {
-            console.log('test');
+        onSuccess: (r) => {
+            console.log('test',r);
         },
         onError: () => {
             console.log(form.errors);

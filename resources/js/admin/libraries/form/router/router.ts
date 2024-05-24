@@ -97,9 +97,8 @@ export default class Router {
             },
         })
             .then((response) => {
-
                 // todo response callback
-               // onSuccess([response])
+                onSuccess(response)
             })
             .then(() => {
 
