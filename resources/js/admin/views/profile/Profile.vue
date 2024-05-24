@@ -35,13 +35,16 @@ import {useStore} from "vuex";
 import axios from "axios";
 import {ref} from "vue";
 import ErrorMessage from "@/admin/components/tools/ErrorMessage";
-import {useForm} from "@inertiajs/vue3";
+import {easyForm} from "@/admin/libraries/form/Form";
 
 const store = useStore()
 const user = store.getters.user;
 const errors = ref({});
 
-const form = useForm(store.getters.user);
+const form = easyForm(store.getters.user);
+
+console.log(form);
+
 
 const save = () => {
 
