@@ -84,11 +84,11 @@ export default class Router {
             url: urlWithoutHash(url).href,
             data: method === 'get' ? {} : data,
             params: method === 'get' ? data : {},
-            headers: {
-                ...headers,
-                Accept: 'text/html, application/xhtml+xml',
-                'X-Requested-With': 'XMLHttpRequest',
-            },
+            // headers: {
+            //     ...headers,
+            //     Accept: 'text/html, application/xhtml+xml',
+            //     'X-Requested-With': 'XMLHttpRequest',
+            // },
             onUploadProgress: (progress) => {
                 progress.percentage = progress.progress ? Math.round(progress.progress * 100) : 0
                 onProgress(progress)
@@ -109,7 +109,7 @@ export default class Router {
             .catch((error) => {
                 onError(error)
             })
-            .finally(()=>{
+            .finally(() => {
                 onFinish();
             })
     }

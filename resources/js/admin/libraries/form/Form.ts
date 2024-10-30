@@ -180,7 +180,7 @@ export function easyForm<TForm extends FormDataType>(
                 onError: (errors) => {
                     this.processing = false
                     this.progress = null
-                    this.clearErrors().setError(errors)
+                    this.clearErrors().setError(errors.response.data.errors)
                 },
                 onCancel: () => {
                     this.processing = false

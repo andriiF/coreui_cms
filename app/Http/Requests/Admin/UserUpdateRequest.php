@@ -26,8 +26,12 @@ class UserUpdateRequest extends FormRequest
             'email' => 'required|email'
         ];
     }
+
     public function messages()
     {
-        return parent::messages();
+        return [
+            '*.required' => 'Pole Wymagane',
+            '*.email' => 'Pole ma nie prawidłowy format'
+        ];
     }
 }

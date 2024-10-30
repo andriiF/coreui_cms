@@ -12,13 +12,13 @@
                 <CForm class="row g-3">
                     <CCol :md="6">
                         <CFormLabel>Nazwa</CFormLabel>
-                        <CFormInput type="text" v-model="form.name" :class="{'error':errors.name}"/>
-                        <ErrorMessage :message="errors.name"/>
+                        <CFormInput type="text" v-model="form.name" :class="{'error':form.errors.name}"/>
+                        <ErrorMessage :message="form.errors.name"/>
                     </CCol>
                     <CCol :md="6">
                         <CFormLabel>E-mail</CFormLabel>
-                        <CFormInput type="e-mail" v-model="form.email" :class="{'error':errors.email}"/>
-                        <ErrorMessage :message="errors.email"/>
+                        <CFormInput type="e-mail" v-model="form.email" :class="{'error':form.errors.email}"/>
+                        <ErrorMessage :message="form.errors.email"/>
                     </CCol>
                     <CCol :xs="12" class="mt-5">
                         <CButton type="button" color="primary" @click="save">Zapisz</CButton>
@@ -48,10 +48,10 @@ const save = () => {
 
     form.post(route('profile.update', {id: user.id}), {
         onSuccess: (r) => {
-            console.log('test',r);
+            console.log('success', r, form);
         },
         onError: (err) => {
-            console.log(form,err);
+            console.log(form, err, 'error');
         }
     })
 
