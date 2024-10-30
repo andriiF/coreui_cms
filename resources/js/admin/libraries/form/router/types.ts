@@ -1,4 +1,4 @@
-import { AxiosProgressEvent, AxiosResponse } from 'axios'
+import {AxiosProgressEvent, AxiosResponse} from 'axios'
 
 declare module 'axios' {
     export interface AxiosProgressEvent {
@@ -100,10 +100,8 @@ export type GlobalEventsMap = {
         result: void
     }
     finish: {
-        parameters: [ActiveVisit]
-        details: {
-            visit: ActiveVisit
-        }
+        parameters: []
+        details: {}
         result: void
     }
     cancel: {
@@ -166,9 +164,8 @@ export type GlobalEventCallback<TEventName extends GlobalEventNames> = (
     ...params: GlobalEventParameters<TEventName>
 ) => GlobalEventResult<TEventName>
 
-export type VisitOptions = Partial<
-    Visit & {
-    onCancelToken: { ({ cancel }: { cancel: VoidFunction }): void }
+export type VisitOptions = Partial<Visit & {
+    onCancelToken: { ({cancel}: { cancel: VoidFunction }): void }
     onBefore: GlobalEventCallback<'before'>
     onStart: GlobalEventCallback<'start'>
     onProgress: GlobalEventCallback<'progress'>
@@ -176,8 +173,7 @@ export type VisitOptions = Partial<
     onCancel: GlobalEventCallback<'cancel'>
     onSuccess: GlobalEventCallback<'success'>
     onError: GlobalEventCallback<'error'>
-}
-    >
+}>
 
 export type PendingVisit = Visit & {
     url: URL

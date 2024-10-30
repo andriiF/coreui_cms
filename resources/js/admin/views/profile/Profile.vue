@@ -44,18 +44,14 @@ const errors = ref({});
 
 const form = easyForm(store.getters.user);
 
-console.log(form);
-
-
 const save = () => {
 
     form.post(route('profile.update', {id: user.id}), {
-        preserveState: false,
         onSuccess: (r) => {
             console.log('test',r);
         },
-        onError: () => {
-            console.log(form.errors);
+        onError: (err) => {
+            console.log(form,err);
         }
     })
 

@@ -90,27 +90,27 @@ export default class Router {
                 'X-Requested-With': 'XMLHttpRequest',
             },
             onUploadProgress: (progress) => {
-                if (data instanceof FormData) {
-                    progress.percentage = progress.progress ? Math.round(progress.progress * 100) : 0
-                    onProgress(progress)
-                }
+                progress.percentage = progress.progress ? Math.round(progress.progress * 100) : 0
+                onProgress(progress)
             },
         })
             .then((response) => {
-                // todo response callback
                 onSuccess(response)
             })
             .then(() => {
 
             })
             .catch((error) => {
-
+                onError(error)
             })
             .then(() => {
 
             })
             .catch((error) => {
-
+                onError(error)
+            })
+            .finally(()=>{
+                onFinish();
             })
     }
 
@@ -136,22 +136,9 @@ export default class Router {
     }
 
     public static delete(url: URL | string, options: Omit<VisitOptions, 'method'> = {}): void {
-        // window.location.href = url;
-        // return this.visit(url, {preserveState: true, ...options, method: 'delete'})
     }
 
     public static remember(data: unknown, key = 'default'): void {
-        // if (isServer) {
-        //     return
-        // }
-        //
-        // this.replaceState({
-        //     ...this.page,
-        //     rememberedState: {
-        //         ...this.page?.rememberedState,
-        //         [key]: data,
-        //     },
-        // })
     }
 
     public static restore(key = 'default'): unknown {

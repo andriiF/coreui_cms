@@ -8,7 +8,7 @@ export default createStore({
         user: {}
     },
     getters: {
-        user: state => state.user
+        user: state => state.user,
     },
     mutations: {
         toggleSidebar(state) {

@@ -3,6 +3,7 @@ import Router from './router/router';
 import {reactive, watch} from "vue";
 import cloneDeep from 'lodash.clonedeep'
 import isEqual from 'lodash.isequal'
+import {useStore} from "vuex";
 
 type FormDataType = object;
 
@@ -145,7 +146,9 @@ export function easyForm<TForm extends FormDataType>(
 
             return this
         },
-        submit(method, url, options:any = {}) {
+        submit(method, url, options: any = {}) {
+            this.clearProgress();
+            this.startProgress();
             const data = transform(this.data())
             const _options = {
                 onCancelToken: (token) => {
@@ -160,6 +163,7 @@ export function easyForm<TForm extends FormDataType>(
                     this.processing = true
                 },
                 onProgress: (event) => {
+                    this.setProgress(event.percentage);
                     this.progress = event
                 },
                 onSuccess: async (response) => {
@@ -182,20 +186,16 @@ export function easyForm<TForm extends FormDataType>(
                     this.processing = false
                     this.progress = null
                 },
-                onFinish: (visit) => {
+                onFinish: () => {
                     this.processing = false
                     this.progress = null
                     cancelToken = null
+                    setTimeout(() => (this.clearProgress()), 2000)
                 },
             }
 
             const r = new Router();
-
-            if (method === 'delete') {
-                // r.delete(url, {..._options, data})
-            } else {
-                r[method](url, data, _options)
-            }
+            r[method](url, data, _options)
         },
         get(url, options) {
             this.submit('get', url, options)
@@ -224,6 +224,16 @@ export function easyForm<TForm extends FormDataType>(
         __restore(restored) {
             Object.assign(this, restored.data)
             this.setError(restored.errors)
+        },
+        startProgress() {
+            document.getElementById("progress-load-bar").style.opacity = '1';
+        },
+        clearProgress() {
+            document.getElementById("progress-load-bar").style.opacity = '0';
+            document.getElementById("form-progress").style.width = '0%';
+        },
+        setProgress(value) {
+            document.getElementById("form-progress").style.width = value + '%';
         },
     })
 

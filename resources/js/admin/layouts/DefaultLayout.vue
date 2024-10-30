@@ -1,7 +1,7 @@
 <template>
     <div>
-        <CProgress class="mb-3 progress-load-bar">
-            <CProgressBar :value="50" class="bg-success"/>
+        <CProgress class="mb-3 progress-load-bar" id="progress-load-bar" style="opacity: 0;">
+            <CProgressBar :value="0" class="bg-success" id="form-progress"/>
         </CProgress>
         <AppSidebar/>
         <div class="wrapper d-flex flex-column min-vh-100 bg-light">
@@ -20,6 +20,11 @@ import {CContainer} from '@coreui/vue'
 import AppFooter from '@/admin/components/AppFooter.vue'
 import AppHeader from '@/admin/components/AppHeader.vue'
 import AppSidebar from '@/admin/components/AppSidebar.vue'
+import {useStore} from "vuex";
+
+const store = useStore()
+
+
 
 </script>
 <style lang="scss">
