@@ -45,23 +45,9 @@ const errors = ref({});
 const form = easyForm(store.getters.user);
 
 const save = () => {
-
     form.post(route('profile.update', {id: user.id}), {
         onSuccess: (r) => {
-            console.log('success', r, form);
         },
-        onError: (err) => {
-            console.log(form, err, 'error');
-        }
     })
-
-
-    // axios.post(route('profile.update', {id: user.id}), form)
-    //     .then(response => {
-    //         errors.value = {};
-    //     })
-    //     .catch(err => {
-    //         errors.value = err.response.data.errors;
-    //     })
 }
 </script>
