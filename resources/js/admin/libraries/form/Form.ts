@@ -176,11 +176,13 @@ export function easyForm<TForm extends FormDataType>(
                     defaults = cloneDeep(this.data())
                     this.isDirty = false
                     options.onSuccess(response);
+                    this.onAlert('success', 'Success !!');
                 },
                 onError: (errors) => {
                     this.processing = false
                     this.progress = null
                     this.clearErrors().setError(errors.response.data.errors)
+                    this.onAlert('danger', 'Ups coś poszło nie tak');
                 },
                 onCancel: () => {
                     this.processing = false
@@ -235,6 +237,13 @@ export function easyForm<TForm extends FormDataType>(
         setProgress(value) {
             document.getElementById("form-progress").style.width = value + '%';
         },
+        onAlert(type: string, message: string) {
+            let alert = document.getElementById("alert-box");
+            alert.className = 'alert alert-' + type;
+            alert.innerHTML = message
+            alert.style.display = '';
+            setTimeout(() => (alert.style.display = 'none'), 2000)
+        }
     })
 
     watch(

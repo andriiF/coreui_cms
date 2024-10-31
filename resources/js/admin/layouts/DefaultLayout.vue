@@ -3,6 +3,7 @@
         <CProgress class="mb-3 progress-load-bar" id="progress-load-bar" style="opacity: 0;">
             <CProgressBar :value="0" class="bg-success" id="form-progress"/>
         </CProgress>
+        <CAlert id="alert-box" ></CAlert>
         <AppSidebar/>
         <div class="wrapper d-flex flex-column min-vh-100 bg-light">
             <AppHeader/>
@@ -25,9 +26,16 @@ import {useStore} from "vuex";
 const store = useStore()
 
 
-
 </script>
 <style lang="scss">
+#alert-box {
+    width: 200px;
+    float: right;
+    position: fixed;
+    right: 0px;
+    z-index: 9999;
+    bottom: 50px;
+}
 .progress-load-bar {
     height: 4px;
 }
